@@ -502,6 +502,52 @@ function Dashboard({
       (application) =>
         application.status === 'Offer'
     ).length
+    const rejectedApplications =
+  applications.filter(
+    (application) =>
+      application.status === 'Rejected'
+  ).length
+
+const interviewRate =
+  applicationsSent > 0
+    ? Math.round(
+        (interviews / applicationsSent) * 100
+      )
+    : 0
+
+const offerRate =
+  applicationsSent > 0
+    ? Math.round(
+        (offers / applicationsSent) * 100
+      )
+    : 0
+    const upcomingInterviews = useMemo(() => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  return applications
+    .filter((application) => {
+      if (!application.interviewDate) {
+        return false
+      }
+
+      const interviewDate = new Date(
+        application.interviewDate
+      )
+
+      interviewDate.setHours(0, 0, 0, 0)
+
+      return (
+        interviewDate >= today &&
+        application.status === 'Interview'
+      )
+    })
+    .sort(
+      (a, b) =>
+        new Date(a.interviewDate) -
+        new Date(b.interviewDate)
+    )
+}, [applications])
 
   return (
     <div className="app">
@@ -542,47 +588,272 @@ function Dashboard({
       <main>
         {/* STATISTICS */}
 
-        <section className="stats">
-          <div className="stat-card">
-            <span>
-              Total Applications
-            </span>
+       <section className="stats">
+  <div className="stat-card">
+    <span>Total Applications</span>
 
+    <strong>{totalApplications}</strong>
+
+    <small>
+      All tracked applications
+    </small>
+  </div>
+
+  <div className="stat-card">
+    <span>Applications Sent</span>
+
+    <strong>{applicationsSent}</strong>
+
+    <small>
+      {totalApplications > 0
+        ? `${Math.round(
+            (applicationsSent /
+              totalApplications) *
+              100
+          )}% of total`
+        : 'No applications yet'}
+    </small>
+  </div>
+
+  <div className="stat-card">
+    <span>Interviews</span>
+
+    <strong>{interviews}</strong>
+
+    <small>
+      {interviewRate}% interview rate
+    </small>
+  </div>
+
+  <div className="stat-card">
+    <span>Offers</span>
+
+    <strong>{offers}</strong>
+
+    <small>
+      {offerRate}% offer rate
+    </small>
+  </div>
+
+  <div className="stat-card">
+    <span>Rejected</span>
+
+    <strong>{rejectedApplications}</strong>
+
+    <small>
+      Applications not progressing
+    </small>
+  </div>
+</section>
+{/* APPLICATION PIPELINE */}
+
+<section className="pipeline-section">
+  <div className="section-header">
+    <h2>Application Pipeline</h2>
+
+    <p>
+      Track how your applications are progressing.
+    </p>
+  </div>
+
+  <div className="pipeline">
+    <div className="pipeline-stage saved">
+      <div className="pipeline-stage-top">
+        <span>Saved</span>
+        <strong>
+          {
+            applications.filter(
+              (application) =>
+                application.status === 'Saved'
+            ).length
+          }
+        </strong>
+      </div>
+
+      <div className="pipeline-bar">
+        <div
+          style={{
+            width: `${
+              totalApplications > 0
+                ? (applications.filter(
+                    (application) =>
+                      application.status === 'Saved'
+                  ).length /
+                    totalApplications) *
+                  100
+                : 0
+            }%`,
+          }}
+        />
+      </div>
+    </div>
+
+    <div className="pipeline-stage applied">
+      <div className="pipeline-stage-top">
+        <span>Applied</span>
+        <strong>{applicationsSent}</strong>
+      </div>
+
+      <div className="pipeline-bar">
+        <div
+          style={{
+            width: `${
+              totalApplications > 0
+                ? (applicationsSent /
+                    totalApplications) *
+                  100
+                : 0
+            }%`,
+          }}
+        />
+      </div>
+    </div>
+
+    <div className="pipeline-stage interview">
+      <div className="pipeline-stage-top">
+        <span>Interview</span>
+        <strong>{interviews}</strong>
+      </div>
+
+      <div className="pipeline-bar">
+        <div
+          style={{
+            width: `${
+              totalApplications > 0
+                ? (interviews /
+                    totalApplications) *
+                  100
+                : 0
+            }%`,
+          }}
+        />
+      </div>
+    </div>
+
+    <div className="pipeline-stage offer">
+      <div className="pipeline-stage-top">
+        <span>Offer</span>
+        <strong>{offers}</strong>
+      </div>
+
+      <div className="pipeline-bar">
+        <div
+          style={{
+            width: `${
+              totalApplications > 0
+                ? (offers /
+                    totalApplications) *
+                  100
+                : 0
+            }%`,
+          }}
+        />
+      </div>
+    </div>
+
+    <div className="pipeline-stage rejected">
+      <div className="pipeline-stage-top">
+        <span>Rejected</span>
+        <strong>{rejectedApplications}</strong>
+      </div>
+
+      <div className="pipeline-bar">
+        <div
+          style={{
+            width: `${
+              totalApplications > 0
+                ? (rejectedApplications /
+                    totalApplications) *
+                  100
+                : 0
+            }%`,
+          }}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+{/* UPCOMING INTERVIEWS */}
+
+<section className="upcoming-section">
+  <div className="section-header">
+    <h2>Upcoming Interviews</h2>
+
+    <p>
+      Your scheduled interviews coming up.
+    </p>
+  </div>
+
+  {upcomingInterviews.length === 0 ? (
+    <div className="upcoming-empty">
+      <div className="upcoming-empty-icon">
+        ✓
+      </div>
+
+      <div>
+        <strong>No upcoming interviews</strong>
+
+        <p>
+          Interviews you schedule will appear
+          here.
+        </p>
+      </div>
+    </div>
+  ) : (
+    <div className="upcoming-list">
+      {upcomingInterviews.map((application) => (
+        <div
+          className="upcoming-card"
+          key={application.id}
+        >
+          <div className="upcoming-date">
             <strong>
-              {totalApplications}
+              {new Date(
+                application.interviewDate
+              ).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+              })}
             </strong>
+
+            <span>
+              {new Date(
+                application.interviewDate
+              ).toLocaleDateString('en-US', {
+                weekday: 'short',
+              })}
+            </span>
           </div>
 
-          <div className="stat-card">
-            <span>
-              Applications Sent
-            </span>
+          <div className="upcoming-info">
+            <h3>
+              {application.position}
+            </h3>
 
-            <strong>
-              {applicationsSent}
-            </strong>
+            <p>
+              {application.company}
+            </p>
+
+            {application.location && (
+              <span>
+                {application.location}
+              </span>
+            )}
           </div>
 
-          <div className="stat-card">
-            <span>
-              Interviews
-            </span>
-
-            <strong>
-              {interviews}
-            </strong>
-          </div>
-
-          <div className="stat-card">
-            <span>
-              Offers
-            </span>
-
-            <strong>
-              {offers}
-            </strong>
-          </div>
-        </section>
+          <button
+            className="details-button"
+            onClick={() =>
+              setSelectedApplication(application)
+            }
+          >
+            View Details
+          </button>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
 
         {/* FORM */}
 
@@ -878,93 +1149,95 @@ function Dashboard({
             </div>
           ) : (
             <div className="application-list">
-              {filteredApplications.map(
-                (application) => (
-                  <div
-                    className="application-card"
-                    key={application.id}
-                  >
-                    <div>
-                      <h3>
-                        {application.position}
-                      </h3>
+  {filteredApplications.map((application) => (
+    <div
+      className="application-card"
+      key={application.id}
+    >
+      <div className="application-main">
+        <div className="application-title-row">
+          <div>
+            <h3>{application.position}</h3>
 
-                      <p>
-                        {application.company}
-                      </p>
+            <p>{application.company}</p>
+          </div>
 
-                      {application.location && (
-                        <span>
-                          {application.location}
-                        </span>
-                      )}
+          <span
+            className={`status ${application.status.toLowerCase()}`}
+          >
+            {application.status}
+          </span>
+        </div>
 
-                      {application.applicationDate && (
-                        <small>
-                          Applied:{' '}
-                          {new Date(
-                            application.applicationDate
-                          ).toLocaleDateString()}
-                        </small>
-                      )}
-                    </div>
+        <div className="application-meta">
+          {application.location && (
+            <span>
+              📍 {application.location}
+            </span>
+          )}
 
-                    <div className="application-right">
-                      <span
-                        className={`status ${application.status.toLowerCase()}`}
-                      >
-                        {application.status}
-                      </span>
+          {application.applicationDate && (
+            <span>
+              Applied:{' '}
+              {new Date(
+                application.applicationDate
+              ).toLocaleDateString()}
+            </span>
+          )}
 
-                      {application.jobUrl && (
-                        <a
-                          href={
-                            application.jobUrl
-                          }
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          View Job
-                        </a>
-                      )}
+          {application.interviewDate && (
+            <span className="interview-meta">
+              Interview:{' '}
+              {new Date(
+                application.interviewDate
+              ).toLocaleDateString()}
+            </span>
+          )}
+        </div>
+      </div>
 
-                      <button
-                        className="details-button"
-                        onClick={() =>
-                          setSelectedApplication(
-                            application
-                          )
-                        }
-                      >
-                        Details
-                      </button>
+      <div className="application-right">
+        {application.jobUrl && (
+          <a
+            className="job-link"
+            href={application.jobUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View Job
+          </a>
+        )}
 
-                      <button
-                        className="edit-button"
-                        onClick={() =>
-                          handleEdit(
-                            application
-                          )
-                        }
-                      >
-                        Edit
-                      </button>
+        <button
+          className="details-button"
+          onClick={() =>
+            setSelectedApplication(application)
+          }
+        >
+          Details
+        </button>
 
-                      <button
-                        className="delete-button"
-                        onClick={() =>
-                          handleDelete(
-                            application.id
-                          )
-                        }
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
+        <button
+          className="edit-button"
+          onClick={() =>
+            handleEdit(application)
+          }
+        >
+          Edit
+        </button>
+
+        <button
+          className="delete-button"
+          onClick={() =>
+            handleDelete(application.id)
+          }
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
           )}
         </section>
 
