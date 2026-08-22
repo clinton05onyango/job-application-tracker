@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import './App.css'
 
-const API_URL = 'http://localhost:5000/api'
+const API_URL = 'https://job-application-tracker-api-870u.onrender.com/api'
 
 function App() {
   const [token, setToken] = useState(
