@@ -9,6 +9,29 @@ https://job-application-tracker-0tmv.onrender.com
 
 **GitHub Repository:**
 https://github.com/clinton05onyango/job-application-tracker
+---
+
+## 📸 Screenshots
+
+### Registration
+
+![registration screen](screenshots/registration.png)
+
+### Login
+
+![Login Screen](screenshots/login.png)
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Application Pipeline
+
+![Application Pipeline](screenshots/pipeline.png)
+
+### Application Form
+
+![Application Form](screenshots/application.png)
 
 ---
 
