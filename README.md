@@ -1,6 +1,6 @@
 # Job Application Tracker
 
-A full-stack job application tracking system built to help job seekers organize, manage, and monitor their job applications from one dashboard.
+A full-stack web application that helps job seekers organize, manage, and monitor their job applications from one dashboard.
 
 ## 🚀 Live Demo
 
@@ -10,41 +10,51 @@ https://job-application-tracker-0tmv.onrender.com
 **GitHub Repository:**
 https://github.com/clinton05onyango/job-application-tracker
 
+---
+
 ## 📌 About the Project
 
-Job Application Tracker allows users to keep their job applications organized in one place.
+Job Application Tracker is a full-stack application designed to help job seekers keep their applications organized in one place.
 
-Users can create an account, log in securely, add job applications, update their application status, record interview dates and notes, search applications, and monitor their application progress through a dashboard.
+Users can create an account, securely log in, add job applications, update application statuses, record interview information, search and filter applications, and monitor their progress through a centralized dashboard.
 
-The project demonstrates practical full-stack development, API integration, authentication, CRUD operations, responsive UI development, Git/GitHub workflow, and cloud deployment.
+The project demonstrates practical experience with full-stack web development, authentication, REST API integration, CRUD operations, responsive UI development, Git/GitHub workflow, and cloud deployment.
+
+---
 
 ## ✨ Features
 
 * User registration and login
 * JWT authentication
-* Personal job application tracking
-* Add applications
-* Edit applications
-* Delete applications
+* Protected user-specific application data
+* Add job applications
+* Edit job applications
+* Delete job applications
 * Search by company or position
 * Filter applications by status
 * Application statistics
-* Application pipeline
+* Application pipeline tracking
 * Interview tracking
 * Job posting links
 * Application notes
 * Responsive dashboard
-* Deployed frontend and backend
+* Production deployment
 
-## 📊 Application Status
+---
 
-Applications can be organized into:
+## 📊 Application Pipeline
 
-* Saved
-* Applied
-* Interview
-* Offer
-* Rejected
+Applications can be organized into the following stages:
+
+* **Saved**
+* **Applied**
+* **Interview**
+* **Offer**
+* **Rejected**
+
+This allows users to quickly understand where each application is in the hiring process.
+
+---
 
 ## 🛠️ Technologies Used
 
@@ -69,6 +79,8 @@ Applications can be organized into:
 * Render
 * PowerShell
 
+---
+
 ## 🏗️ Application Architecture
 
 ```text
@@ -82,51 +94,61 @@ Node.js Backend
 Database
 ```
 
-The React frontend communicates with the backend through REST API endpoints for authentication and job application management.
+The React frontend communicates with the Node.js backend through REST API endpoints for authentication and job application management.
+
+---
 
 ## 🔐 Authentication
 
-The application provides user authentication through:
+The application uses JWT-based authentication to protect user data and application management endpoints.
 
-1. Account registration
+Authentication includes:
+
+1. User registration
 2. User login
 3. JWT token authentication
-4. Protected application endpoints
+4. Protected API endpoints
 5. Logout functionality
 
 Authentication tokens are stored locally in the browser and included with protected API requests.
 
+---
+
 ## 💻 Run Locally
 
-### Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/clinton05onyango/job-application-tracker.git
 ```
 
-### Enter the project
+### 2. Enter the project directory
 
 ```bash
 cd job-application-tracker
 ```
 
-### Install dependencies
+### 3. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Start the development server
+### 4. Start the development server
 
 ```bash
 npm run dev
 ```
 
-### Create a production build
+### 5. Create a production build
 
 ```bash
 npm run build
 ```
+
+> **Note:** If the project uses separate frontend and backend directories or requires environment variables, configure those according to the project's deployment configuration before running it locally.
+
+---
 
 ## 📁 Project Structure
 
@@ -144,9 +166,11 @@ job-application-tracker/
 └── README.md
 ```
 
+---
+
 ## 🎯 Skills Demonstrated
 
-This project demonstrates experience with:
+This project demonstrates practical experience with:
 
 * React component development
 * React state management
@@ -157,14 +181,18 @@ This project demonstrates experience with:
 * CRUD operations
 * Search and filtering
 * Responsive web design
+* Frontend/backend integration
 * Git and GitHub
 * Production deployment
 * Debugging deployment issues
-* Frontend/backend integration
+
+---
 
 ## 📈 Future Improvements
 
-Possible future improvements include:
+The current version is focused on the core job application tracking workflow.
+
+Potential future improvements include:
 
 * Dashboard analytics and charts
 * Interview reminders
@@ -176,6 +204,8 @@ Possible future improvements include:
 * Pagination
 * Automated job tracking
 
+---
+
 ## 👨‍💻 Developer
 
 **Clinton Ochieng Onyango**
@@ -183,6 +213,8 @@ Possible future improvements include:
 Junior Software Developer | Software Engineering Undergraduate
 
 Open to remote software development and contract opportunities.
+
+---
 
 ## 📄 License
 
